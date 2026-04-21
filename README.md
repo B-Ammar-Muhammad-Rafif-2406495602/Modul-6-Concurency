@@ -39,3 +39,14 @@ single-threaded, meaning it can only process one request at a time. Any new requ
 current one is done. This is a serious problem in real applications because one slow request from one user can block
 all other users from getting a response. The solution to this is to use multiple threads so that each request can be
 handled independently and simultaneously, which is what we will implement in Milestone 5.
+
+# Commit 5 Reflection notes
+
+In Commit 5, I implemented a multithreaded server using a ThreadPool. Instead of handling one request at a time, the
+server now creates 4 worker threads upfront that are always ready to handle incoming requests. Each Worker contains
+a thread that continuously listens for jobs sent through an mpsc channel. When a new request comes in, the main
+thread sends it as a job through the channel and one of the available workers picks it up and handles it. I used
+Mutex to safely share the channel receiver between multiple worker threads, Arc allows shared ownership and Mutex
+ensures only one worker receives a job at a time to avoid race conditions. When I tested it by opening /sleep and /
+at the same time, the normal request loaded immediately this time, proving that the multithreaded approach solved
+the blocking problem from Milestone 4.
