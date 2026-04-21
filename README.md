@@ -20,3 +20,13 @@ Content-Length which tells the browser how many bytes the response body contains
 actual HTML content. Without the correct format, the browser would not know how to read the response. After running
 the server and accessing 127.0.0.1:7878, I could finally see my HTML page rendered in the browser with the "Hello!"
 heading and my custom message.
+
+## Commit 3 Reflection notes
+
+In Commit 3, I added request validation so the server can respond differently depending on what the browser asks
+for. The server now reads only the first line of the HTTP request and checks if it matches GET / HTTP/1.1. If it
+matches, the server returns hello.html with a 200 OK status. If the request is for any other path like /bad, the
+server returns 404.html with a 404 NOT FOUND status. This taught me how web servers handle routing at a basic level
+— they look at the request path and decide what to respond with. Without this, every request would return the same
+page regardless of what the user asked for, which is not how real web servers work.
+
