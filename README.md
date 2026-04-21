@@ -50,3 +50,11 @@ Mutex to safely share the channel receiver between multiple worker threads, Arc 
 ensures only one worker receives a job at a time to avoid race conditions. When I tested it by opening /sleep and /
 at the same time, the normal request loaded immediately this time, proving that the multithreaded approach solved
 the blocking problem from Milestone 4.
+
+# Commit Bonus Reflection notes
+
+In this bonus, I created a build function as an alternative to new for creating a ThreadPool. The difference is that
+new uses assert! which crashes the program if size is 0, while build returns a Result so the error can be handled
+without crashing. This is better for production code because crashing unexpectedly is hard to debug and not user
+friendly. Using unwrap_or_else on the result lets the program print a useful error message and exit cleanly instead.
+This taught me that Rust prefers explicit error handling over unexpected panics.
