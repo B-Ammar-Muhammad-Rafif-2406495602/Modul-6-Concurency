@@ -9,3 +9,14 @@ never actually process the request.
 
 i also discover some error when trying to run after i added the handle connection, turns out i havent kill the old
 server so it still runs in the background. i kill it using "taskkill /f /im hello.exe"
+
+
+## Commit 2 Reflection notes. 
+
+In Commit 2, I modified handle_connection to send back an actual HTTP response to the browser. The function now
+reads hello.html using fs::read_to_string and sends its content back through the TCP stream. I learned that an HTTP
+response has a specific format: it starts with a status line like HTTP/1.1 200 OK, followed by headers like
+Content-Length which tells the browser how many bytes the response body contains, then a blank line, and finally the
+actual HTML content. Without the correct format, the browser would not know how to read the response. After running
+the server and accessing 127.0.0.1:7878, I could finally see my HTML page rendered in the browser with the "Hello!"
+heading and my custom message.
