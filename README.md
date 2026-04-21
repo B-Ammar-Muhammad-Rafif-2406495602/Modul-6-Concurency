@@ -30,3 +30,12 @@ server returns 404.html with a 404 NOT FOUND status. This taught me how web serv
 — they look at the request path and decide what to respond with. Without this, every request would return the same
 page regardless of what the user asked for, which is not how real web servers work.
 
+# Commit 4 Reflection notes
+
+In Commit 4, I added a /sleep route that simulates a slow response by making the server wait 10 seconds using
+thread::sleep. When I opened two browser tabs — one accessing /sleep and one accessing / — I noticed that the
+normal / request was also stuck waiting until the /sleep request finished. This happened because our server is
+single-threaded, meaning it can only process one request at a time. Any new request has to wait in a queue until the
+current one is done. This is a serious problem in real applications because one slow request from one user can block
+all other users from getting a response. The solution to this is to use multiple threads so that each request can be
+handled independently and simultaneously, which is what we will implement in Milestone 5.
